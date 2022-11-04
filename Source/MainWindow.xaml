@@ -3,45 +3,55 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Source"
+        xmlns:local="clr-namespace:Source" 
+        xmlns:map="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="850" Width="1200" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
+
+    <Window.Resources>
+        <ControlTemplate x:Key="customPushPin" TargetType="map:Pushpin">
+            <Ellipse Width="30" Height="30">
+                <Ellipse.Fill>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                        <GradientStop Offset="0" Color="DeepSkyBlue"></GradientStop>
+                        <GradientStop Offset="1" Color="DeepPink"></GradientStop>
+                    </LinearGradientBrush>
+                </Ellipse.Fill>
+            </Ellipse>
+        </ControlTemplate>
+    </Window.Resources>
+
+
     <Grid>
 
-        <Button Content="Click" Width="100" Height="100" FontSize="26">
-            <Button.Triggers>
-                <EventTrigger RoutedEvent="MouseEnter">
-                    <BeginStoryboard>
-                        <Storyboard>
-                            <DoubleAnimation
-                                Storyboard.TargetProperty="Width"
-                                To="200"
-                                Duration="0:0:1"/>
-                            <ColorAnimation To="Red"
-                            Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)"
-                            Duration="0:0:1"/>
-                        </Storyboard>
-                    </BeginStoryboard>
-                </EventTrigger>
 
-                <EventTrigger RoutedEvent="MouseLeave">
-                    <BeginStoryboard>
-                        <Storyboard>
-                            <DoubleAnimation
-                                Storyboard.TargetProperty="Width"
-                                To="100"
-                                Duration="0:0:1"/>
-                            
-                            <ColorAnimation To="Green" 
-                                Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)"
-                                Duration="0:0:1"/>
-                        </Storyboard>
-                    </BeginStoryboard>
-                </EventTrigger>
-            </Button.Triggers>
-        </Button>
+        <TextBlock x:Name="txt"
+                   HorizontalAlignment="Center"
+                   Text="Empty" 
+                   FontSize="42"/>
 
 
 
+        <!--<map:Map Name="m" Mode="AerialWithLabels" ZoomLevel="11" Center="40.4093, 49.8671"></map:Map>--><!--
+
+        <map:Map Name="m" ZoomLevel="11" Center="40.4093, 49.8671">
+            <map:Pushpin Template="{DynamicResource customPushPin}" Location="40.4093, 49.8671"></map:Pushpin>
+            <map:Pushpin Location="40.4583, 49.7522"></map:Pushpin>
+        </map:Map>
+
+
+
+        <ListView ItemsSource="{Binding BakuBus.Buses}">
+            <ListView.View>
+                <GridView AllowsColumnReorder="True">
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Attributes.BUS_ID}" Header="BUS_ID"></GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Attributes.PREV_STOP}" Header="PREV_STOP"></GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>-->
+        
+        
+        
+        
     </Grid>
 </Window>
